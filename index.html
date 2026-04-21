@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PitchKing Collect</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- Auth Screen -->
+<div id="authScreen">
+    <div class="auth-box">
+        <div class="auth-logo">👑</div>
+        <div class="auth-title">PitchKing</div>
+        <div class="auth-subtitle">Collect</div>
+        <div class="auth-tagline">Scan. Identify. Collect.</div>
+
+        <form id="authForm">
+            <h3 id="authTitle" style="margin-bottom:16px; font-size:18px;">Sign In</h3>
+            <input type="email" id="authEmail" placeholder="Email" autocomplete="email">
+            <input type="password" id="authPassword" placeholder="Password" autocomplete="current-password">
+            <div id="authError" class="auth-error"></div>
+            <button type="submit" id="authSubmit" class="btn btn-primary">Sign In</button>
+        </form>
+        <button id="authToggle" class="auth-toggle">Don't have an account? Sign up</button>
+    </div>
+</div>
+
+<!-- App Screen -->
+<div id="appScreen" class="hidden">
+
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-brand">
+            <h1>PitchKing</h1>
+            <span>Collect</span>
+        </div>
+        <div class="header-actions">
+            <button id="scanBtn">+ Scan</button>
+            <button id="logoutBtn">Sign Out</button>
+        </div>
+    </header>
+
+    <!-- Stats -->
+    <div class="stats-bar">
+        <div class="stat-card">
+            <div class="stat-value" id="statTotal">0</div>
+            <div class="stat-label">Items</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="statGraded">0</div>
+            <div class="stat-label">Graded</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="statAvgGrade">-</div>
+            <div class="stat-label">Avg Grade</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="statValue">-</div>
+            <div class="stat-label">Value</div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters-bar">
+        <input type="text" id="searchInput" placeholder="Search collection...">
+        <select id="filterSport"><option value="">All Sports</option></select>
+        <select id="filterBrand"><option value="">All Brands</option></select>
+    </div>
+
+    <!-- Collection Actions -->
+    <div class="collection-actions">
+        <button id="exportPdfBtn" class="action-pill">📄 Export PDF</button>
+        <button id="aiCollectionBtn" class="action-pill">🤖 AI Collection Analysis</button>
+    </div>
+
+    <!-- Items Grid -->
+    <div class="items-grid" id="itemsGrid"></div>
+
+    <!-- AI Collection Analysis Panel -->
+    <div id="aiAnalysisPanel" class="ai-panel hidden">
+        <div class="ai-panel-header">
+            <h3>AI Collection Analysis</h3>
+            <button id="aiPanelClose" class="modal-close">&times;</button>
+        </div>
+        <div id="aiAnalysisContent" class="ai-panel-body"></div>
+    </div>
+
+</div>
+
+<!-- Scanner Modal -->
+<div id="scannerModal" class="modal">
+    <div class="modal-header">
+        <h2>Scan Collectible</h2>
+        <button class="modal-close" id="scanClose">&times;</button>
+    </div>
+    <div class="scanner-body">
+        <!-- Capture View -->
+        <div id="scanCapture">
+            <div class="scan-side-indicator">Scanning: <strong id="scanSideLabel">Front</strong></div>
+            <video id="cameraFeed" autoplay playsinline></video>
+            <div id="cameraFallback" class="hidden" style="text-align:center; padding:40px;">
+                <p style="color:var(--text2); margin-bottom:16px;">Camera not available — upload a photo instead</p>
+            </div>
+            <div class="camera-controls">
+                <button id="uploadBtn" class="upload-pill">📁 Upload Photo</button>
+                <button id="captureBtn" class="capture-btn" aria-label="Capture"></button>
+            </div>
+            <input type="file" id="fileInput" accept="image/*" capture="environment" class="hidden">
+        </div>
+
+        <!-- Result View -->
+        <div id="scanResult" class="scan-result hidden">
+            <img id="scanPreview" class="scan-preview" alt="Scanned item">
+            <div id="scanStatus" class="scan-status"></div>
+            <div id="extractionDetails"></div>
+            <div class="scan-actions">
+                <button id="retakeBtn" class="btn btn-secondary">Retake</button>
+                <button id="scanBackBtn" class="btn btn-secondary hidden">📸 Scan Back</button>
+                <button id="saveItemBtn" class="btn btn-success hidden">Save to Collection</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Item Detail Modal -->
+<div id="itemDetailModal" class="modal">
+    <div class="modal-header">
+        <h2>Item Details</h2>
+        <button class="modal-close" id="itemDetailClose">&times;</button>
+    </div>
+    <div class="scanner-body" style="padding:16px;">
+        <div id="itemDetailContent"></div>
+    </div>
+</div>
+
+<!-- Supabase JS + jsPDF -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+<script type="module" src="src/main.js"></script>
+</body>
+</html>
